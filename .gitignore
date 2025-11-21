@@ -36,3 +36,22 @@ next-env.d.ts
 # drizzle
 drizzle/migrations/*
 !drizzle/migrations/.gitkeep
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kiro
+.kiro/*
+!.kiro/steering/

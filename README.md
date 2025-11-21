@@ -1,36 +1,101 @@
 # AI SaaS Starter Kit
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
+
 AI 기반 문서 검색 및 챗봇 SaaS 플랫폼 템플릿
 
-## 주요 기능
+> 프로덕션 레벨의 AI SaaS 애플리케이션을 빠르게 구축하세요. Next.js 16, React 19, Supabase, 다중 LLM 지원.
 
-- 🔐 **인증 시스템**: Supabase Auth (이메일/소셜 로그인)
-- 📄 **문서 관리**: 업로드, 수정, 삭제
-- 🤖 **AI 채팅**: 다중 LLM 지원 (OpenAI, Google, Claude, Ollama, LM Studio)
-- 🔍 **벡터 검색**: pgvector 기반 RAG 시스템
-- 💳 **구독 관리**: Stripe 연동 (Free/Pro/Enterprise)
-- 📊 **대시보드**: 사용 통계 및 분석
-- 🎨 **UI**: shadcn/ui + Tailwind CSS
-- 🌍 **다국어 지원**: 한국어, 영어, 일본어, 중국어
+## ✨ 주요 기능
 
-## 기술 스택
+- 🔐 **인증 시스템** - Supabase Auth (이메일/소셜 로그인)
+- 📄 **문서 관리** - 업로드, 수정, 삭제, 벡터 임베딩
+- 🤖 **AI 채팅** - 다중 LLM 지원 (OpenAI, Google Gemini, Claude, Ollama, LM Studio)
+- 🔍 **벡터 검색** - pgvector 기반 RAG 시스템
+- 💳 **구독 관리** - Stripe 연동 (Free/Pro/Enterprise)
+- 📊 **대시보드** - 실시간 사용 통계 및 분석
+- 🎨 **모던 UI** - shadcn/ui + Tailwind CSS
+- ⚡ **고성능** - Next.js 16 + Turbopack
 
-- **프레임워크**: Next.js 15 (App Router)
-- **데이터베이스**: Supabase (PostgreSQL + pgvector)
-- **ORM**: Drizzle ORM
-- **인증**: Supabase Auth
-- **AI**: 다중 LLM (OpenAI, Google Gemini, Claude, Ollama, LM Studio)
-- **결제**: Stripe
-- **UI**: shadcn/ui + Tailwind CSS
-- **상태 관리**: TanStack Query
-- **다국어**: next-intl
+## 🚀 빠른 시작
 
-## 시작하기
+```bash
+# 1. 저장소 클론
+git clone https://github.com/ez2sarang/ai-saas-starter-kit.git
+cd ai-saas-starter-kit
 
-### 1. 의존성 설치
+# 2. 의존성 설치
+npm install
+
+# 3. 환경 변수 설정
+cp .env.example .env.local
+# .env.local 파일을 편집하여 필요한 값을 입력하세요
+
+# 4. 데이터베이스 설정
+npm run db:push
+
+# 5. 개발 서버 실행
+npm run dev
+```
+
+http://localhost:3000 에서 확인하세요!
+
+## 🛠 기술 스택
+
+| 카테고리 | 기술 |
+|---------|------|
+| **프레임워크** | Next.js 16 (App Router + Turbopack) |
+| **UI 라이브러리** | React 19 |
+| **언어** | TypeScript 5.3 |
+| **데이터베이스** | Supabase (PostgreSQL + pgvector) |
+| **ORM** | Drizzle ORM |
+| **인증** | Supabase Auth |
+| **AI/LLM** | OpenAI, Google Gemini, Claude, Ollama, LM Studio |
+| **결제** | Stripe |
+| **UI 컴포넌트** | shadcn/ui + Tailwind CSS |
+| **상태 관리** | TanStack Query |
+| **배포** | Vercel |
+
+## 📖 상세 설정 가이드
+
+### 1. 로컬 데이터베이스 설정
+
+#### PostgreSQL 17 + pgvector 설치 (macOS)
 
 \`\`\`bash
-npm install
+# PostgreSQL 17 설치
+brew install postgresql@17
+
+# 서비스 시작
+brew services start postgresql@17
+
+# pgvector 설치
+brew install pgvector
+
+# PostgreSQL에 연결
+psql postgres
+
+# 데이터베이스 생성
+CREATE DATABASE ai_saas;
+
+# pgvector 확장 활성화
+\c ai_saas
+CREATE EXTENSION IF NOT EXISTS vector;
+\`\`\`
+
+#### Supabase 로컬 환경 설정
+
+\`\`\`bash
+# Supabase CLI 설치
+brew install supabase/tap/supabase
+
+# Supabase 초기화 및 시작
+supabase start
+
+# 출력된 정보를 .env.local에 복사
 \`\`\`
 
 ### 2. 환경 변수 설정
@@ -42,35 +107,44 @@ cp .env.example .env.local
 \`\`\`
 
 필수 환경 변수:
-- \`NEXT_PUBLIC_SUPABASE_URL\`: Supabase 프로젝트 URL
+- \`NEXT_PUBLIC_SUPABASE_URL\`: Supabase URL (로컬: http://127.0.0.1:54321)
 - \`NEXT_PUBLIC_SUPABASE_ANON_KEY\`: Supabase Anon Key
 - \`DATABASE_URL\`: PostgreSQL 연결 문자열
-- \`OPENAI_API_KEY\`: OpenAI API 키
-- \`STRIPE_SECRET_KEY\`: Stripe Secret Key
+- \`OPENAI_API_KEY\`: OpenAI API 키 (선택)
+- \`GOOGLE_API_KEY\`: Google Gemini API 키 (선택)
+- \`CLAUDE_API_KEY\`: Claude API 키 (선택)
 
-### 3. 데이터베이스 설정
+**로컬 LLM 사용 (API 키 불필요)**:
+- LM Studio: http://localhost:1234
+- Ollama: http://localhost:11434
 
-#### Supabase에서 pgvector 확장 활성화
-
-Supabase 대시보드 > SQL Editor에서 실행:
-
-\`\`\`sql
-CREATE EXTENSION IF NOT EXISTS vector;
-\`\`\`
-
-#### 마이그레이션 실행
+### 3. 데이터베이스 마이그레이션
 
 \`\`\`bash
 npm run db:push
 \`\`\`
 
-### 4. 개발 서버 실행
+### 4. 로컬 LLM 설정 (선택)
+
+#### LM Studio 사용
+
+1. [LM Studio](https://lmstudio.ai/) 다운로드 및 설치
+2. 원하는 모델 다운로드 (예: Kimi K2 Thinking)
+3. 로컬 서버 시작 (포트: 1234)
+4. 대시보드 > 설정에서 LM Studio 선택
+
+#### Ollama 사용
 
 \`\`\`bash
-npm run dev
-\`\`\`
+# Ollama 설치
+brew install ollama
 
-http://localhost:3000 에서 확인하세요.
+# 모델 다운로드
+ollama pull llama2
+
+# 서버 시작 (자동으로 백그라운드 실행)
+ollama serve
+\`\`\`
 
 ## 프로젝트 구조
 
@@ -147,10 +221,20 @@ http://localhost:3000 에서 확인하세요.
 2. \`npm run db:generate\` 실행
 3. \`npm run db:migrate\` 실행
 
+## 기여하기
+
+기여는 언제나 환영합니다! [CONTRIBUTING.md](CONTRIBUTING.md)를 참고해주세요.
+
 ## 라이선스
 
-MIT
+이 프로젝트는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참고해주세요.
 
 ## 문의
 
-이슈나 질문은 GitHub Issues에 남겨주세요.
+- 기술 문의: sales@com.dooray.com
+- 영업 문의: sales@com.dooray.com
+- GitHub Issues: https://github.com/ez2sarang/ai-saas-starter-kit/issues
+
+## 제작
+
+Made with ❤️ by [ez2sarang](https://github.com/ez2sarang)

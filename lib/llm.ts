@@ -87,7 +87,7 @@ async function generateGoogle(
     : lastMessage.content;
 
   const result = await chat.sendMessage(prompt);
-  const response = await result.response;
+  const response = result.response;
 
   return {
     content: response.text(),
